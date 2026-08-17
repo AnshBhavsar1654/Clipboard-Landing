@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0d0f12;
+  --surface: #15181d;
+  --surface-raised: #1c2128;
+  --border: #292e36;
+  --border-strong: #3a414c;
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-faint: #6b7280;
+  --primary: #6366f1;
+  --primary-soft: #818cf8;
+  --primary-tint: rgba(99, 102, 241, 0.12);
+  --success: #34d399;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-faint: var(--text-faint);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-tint: var(--primary-tint);
+  --color-success: var(--success);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--primary-tint);
+  color: var(--primary-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.bg-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(243, 244, 246, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(243, 244, 246, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.mask-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
