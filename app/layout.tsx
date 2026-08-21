@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "ClipBoardSync — Copy once. Paste anywhere.",
+  title: "ClipBoardSync - Copy once. Paste anywhere.",
   description:
     "Real-time cross-device clipboard sync for your PC and phone over your home Wi-Fi. Share text, images, and files — no cloud, no accounts, zero setup.",
   keywords: [

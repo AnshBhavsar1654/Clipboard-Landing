@@ -2,37 +2,37 @@ import { Reveal } from "@/components/anim";
 
 const TRUST_POINTS = [
   {
-    highlight: "100% Local Wi-Fi",
-    description: "Your data never leaves your home router. Zero cloud servers or third-party relays.",
+    highlight: "100%_LOCAL_WIFI",
+    description: "NO CLOUD ROUTING",
   },
   {
-    highlight: "Sub-Second Sync",
-    description: "Copy on your PC and paste immediately on your phone with zero noticeable delay.",
+    highlight: "SUB_SECOND_SYNC",
+    description: "ZERO DELAY",
   },
   {
-    highlight: "Zero Phone Setup",
-    description: "No app store downloads. Point your phone camera at the QR code and start syncing.",
+    highlight: "ZERO_PHONE_SETUP",
+    description: "NO APP REQUIRED",
   },
   {
-    highlight: "Text, Images & Files",
-    description: "Move text snippets, links, camera photos, and documents in both directions seamlessly.",
+    highlight: "TEXT_IMG_FILES",
+    description: "BI-DIRECTIONAL",
   },
 ];
 
 export function ValueStrip() {
   return (
-    <section className="border-b border-border bg-surface-raised/40">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
+    <section className="border-b border-border bg-surface font-mono uppercase">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid grid-cols-1 border-x border-border sm:grid-cols-2 lg:grid-cols-4">
           {TRUST_POINTS.map((item, i) => (
             <Reveal key={item.highlight} delay={i * 0.04}>
-              <div className="py-7 px-6 sm:px-8">
-                <div className="text-sm font-bold tracking-tight text-text">
+              <div className="flex flex-col justify-center h-20 px-6 sm:px-8 border-b sm:border-b-0 border-border lg:border-r lg:last:border-r-0 sm:[&:nth-child(even)]:border-r-0 sm:[&:nth-child(odd)]:border-r group hover:bg-surface-raised transition-colors">
+                <div className="text-[11px] font-bold tracking-widest text-primary mb-1">
                   {item.highlight}
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-text-secondary">
+                <div className="text-[10px] tracking-wider text-text-secondary">
                   {item.description}
-                </p>
+                </div>
               </div>
             </Reveal>
           ))}
