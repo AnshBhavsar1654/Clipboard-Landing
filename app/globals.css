@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0d0f12;
-  --surface: #15181d;
-  --surface-raised: #1c2128;
-  --border: #292e36;
-  --border-strong: #3a414c;
-  --text: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-faint: #6b7280;
+  /* Light Theme (Clean slate, intentional neutral canvas - avoiding flat sterile #fff) */
+  --bg: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --surface: #ffffff;
+  --surface-raised: #f8fafc;
+  --surface-overlay: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-subtle: #f1f5f9;
+  --text: #0f172a;
+  --text-secondary: #475569;
+  --text-faint: #94a3b8;
+  --primary: #4338ca;
+  --primary-soft: #4f46e5;
+  --primary-tint: rgba(67, 56, 202, 0.08);
+  --success: #16a34a;
+  --success-tint: rgba(22, 163, 74, 0.08);
+}
+
+.dark {
+  /* Dark Theme (Deep graphite / slate obsidian) */
+  --bg: #0b0f17;
+  --bg-subtle: #0f1523;
+  --surface: #131b2e;
+  --surface-raised: #1a243b;
+  --surface-overlay: #212e4a;
+  --border: #23304b;
+  --border-strong: #334466;
+  --border-subtle: #192338;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-faint: #64748b;
   --primary: #6366f1;
   --primary-soft: #818cf8;
   --primary-tint: rgba(99, 102, 241, 0.12);
-  --success: #34d399;
+  --success: #22c55e;
+  --success-tint: rgba(34, 197, 94, 0.1);
 }
 
 @theme inline {
   --color-background: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
+  --color-surface-overlay: var(--surface-overlay);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-border-subtle: var(--border-subtle);
   --color-text: var(--text);
   --color-text-secondary: var(--text-secondary);
   --color-text-faint: var(--text-faint);
@@ -28,20 +56,31 @@
   --color-primary-soft: var(--primary-soft);
   --color-primary-tint: var(--primary-tint);
   --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
   --font-sans: var(--font-inter);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::selection {
@@ -50,7 +89,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--primary-soft);
   outline-offset: 2px;
 }
 
@@ -66,19 +105,4 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-.bg-grid {
-  background-image: linear-gradient(
-      to right,
-      rgba(243, 244, 246, 0.04) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(243, 244, 246, 0.04) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
-.mask-fade-b {
-  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }

@@ -1,4 +1,4 @@
-import { Download, FileArchive } from "lucide-react";
+import { Download, Check, Shield } from "lucide-react";
 import { formatBytes, formatDate } from "@/lib/format";
 import type { ReleaseInfo } from "@/lib/release";
 import { GithubIcon } from "@/components/github-icon";
@@ -13,68 +13,72 @@ export function DownloadCta({ release, githubRepo }: DownloadCtaProps) {
   const hasAsset = Boolean(release.url);
 
   return (
-    <section id="download" className="scroll-mt-20 py-24 sm:py-32">
+    <section id="download" className="scroll-mt-20 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface px-6 py-14 text-center sm:px-12">
-            <div className="bg-grid mask-fade-b absolute inset-0" aria-hidden />
-            <div
-              className="pointer-events-none absolute left-1/2 top-[-160px] h-[360px] w-[640px] -translate-x-1/2 rounded-full bg-primary/15 blur-[110px]"
-              aria-hidden
-            />
+          <div className="rounded-2xl border border-border bg-surface p-8 sm:p-14 text-center max-w-3xl mx-auto shadow-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-raised px-3.5 py-1 text-xs font-medium text-text-secondary">
+              <span className="h-2 w-2 rounded-full bg-success" />
+              <span>Version {release.version}</span>
+              <span className="text-border-strong">·</span>
+              <span>Free &amp; Open Source</span>
+            </div>
 
-            <div className="relative">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-soft">
-                Get ClipBoardSync
-              </p>
-              <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
-                Copy once. Paste anywhere.
-              </h2>
-              <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-text-secondary sm:text-base">
-                Free for Windows 10 & 11. One self-contained executable — no
-                installer, no dependencies, no account.
-              </p>
+            <h2 className="mt-5 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
+              Start syncing across your devices today
+            </h2>
 
-              <div className="mt-8 flex flex-col items-center gap-4">
-                <a
-                  href={release.url ?? "#"}
-                  aria-disabled={!hasAsset}
-                  className={
-                    hasAsset
-                      ? "inline-flex items-center gap-2.5 rounded-lg bg-primary px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary/25 transition-colors hover:bg-primary-soft"
-                      : "inline-flex cursor-not-allowed items-center gap-2.5 rounded-lg bg-border px-8 py-4 text-base font-semibold text-text-faint"
-                  }
-                >
-                  <Download className="h-5 w-5" aria-hidden />
-                  Download ClipBoardSync.exe
-                </a>
+            <p className="mx-auto mt-3 max-w-lg text-sm sm:text-base leading-relaxed text-text-secondary">
+              Download the portable app for Windows 10 and 11. No installer required — just open it and scan the QR code to begin.
+            </p>
 
-                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-text-faint">
-                  <span className="inline-flex items-center gap-1.5">
-                    <FileArchive className="h-3.5 w-3.5" aria-hidden />
-                    {formatBytes(release.size ?? 0)} · .exe
-                  </span>
-                  <span>Version {release.version}</span>
-                  {release.publishedAt && (
-                    <span>Released {formatDate(release.publishedAt)}</span>
-                  )}
-                  {githubRepo && (
-                    <a
-                      href={`https://github.com/${githubRepo}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-text-secondary transition-colors hover:text-text"
-                    >
-                      <GithubIcon size={14} aria-hidden />
-                      View source
-                    </a>
-                  )}
-                </div>
+            <div className="mt-8 flex flex-col items-center justify-center gap-4">
+              <a
+                href={release.url ?? "#"}
+                aria-disabled={!hasAsset}
+                className={
+                  hasAsset
+                    ? "inline-flex items-center gap-2.5 rounded-lg bg-primary px-8 py-4 text-base font-semibold text-white shadow-xs transition-colors hover:bg-primary-soft cursor-pointer"
+                    : "inline-flex cursor-not-allowed items-center gap-2.5 rounded-lg bg-border px-8 py-4 text-base font-semibold text-text-faint"
+                }
+              >
+                <Download className="h-5 w-5" aria-hidden="true" />
+                Download for Windows
+              </a>
+
+              {/* Release Metadata */}
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-text-faint">
+                <span>{formatBytes(release.size ?? 18400000)} · Portable .exe</span>
+                {release.publishedAt && (
+                  <span>Updated {formatDate(release.publishedAt)}</span>
+                )}
+                {githubRepo && (
+                  <a
+                    href={`https://github.com/${githubRepo}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-text-secondary transition-colors hover:text-text"
+                  >
+                    <GithubIcon size={13} aria-hidden="true" />
+                    View on GitHub
+                  </a>
+                )}
               </div>
+            </div>
 
-              <p className="relative mt-10 text-xs leading-relaxed text-text-faint">
-                Works fully offline · No cloud · No accounts · Free forever
-              </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-text-secondary border-t border-border pt-6">
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-success" />
+                No setup or installer
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-success" />
+                Works 100% offline
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-success" />
+                Zero data collected
+              </span>
             </div>
           </div>
         </Reveal>

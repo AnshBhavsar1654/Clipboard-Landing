@@ -1,53 +1,54 @@
-import { Download, ScanLine, RefreshCw } from "lucide-react";
+import { Download, QrCode, ArrowLeftRight, Check } from "lucide-react";
 import { Reveal } from "@/components/anim";
 import { SectionHeading } from "@/components/section-heading";
 
 const STEPS = [
   {
-    icon: Download,
-    step: "01",
-    title: "Download & run",
-    body: "Download ClipBoardSync.exe and double-click it. The bridge starts automatically — there's nothing to configure.",
+    num: "1",
+    title: "Open on your PC",
+    desc: "Download ClipBoardSync for Windows and run it. No complex installer or account signup needed.",
   },
   {
-    icon: ScanLine,
-    step: "02",
+    num: "2",
     title: "Scan the QR code",
-    body: "Point your phone's camera at the QR code in the app to open the live dashboard in any mobile browser.",
+    desc: "Open your phone's camera and point it at the screen. The mobile sync page opens instantly in your browser.",
   },
   {
-    icon: RefreshCw,
-    step: "03",
-    title: "Copy & it syncs",
-    body: "Copy anything on either device. It appears on the other instantly — text, images, or files, in both directions.",
+    num: "3",
+    title: "Copy & paste anywhere",
+    desc: "Copy anything on your PC and paste on your phone, or copy on your phone and press Ctrl+V on your PC.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="scroll-mt-20 py-24 sm:py-32">
+    <section id="how-it-works" className="scroll-mt-20 py-20 sm:py-28 border-b border-border">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
           eyebrow="How it works"
-          title="From download to sync in under a minute"
-          body="No accounts. No phone app to install. No configuration beyond being on the same Wi-Fi network."
+          title="From download to syncing in under a minute"
+          body="No accounts to create, no phone apps to install, and zero complicated network configurations."
         />
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div className="mt-16 grid gap-8 md:grid-cols-3 relative">
           {STEPS.map((step, i) => (
-            <Reveal key={step.step} delay={i * 0.08}>
-              <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-strong">
-                <span className="pointer-events-none absolute -right-4 -top-6 select-none text-[88px] font-extrabold leading-none tracking-tighter text-text/[0.04]">
-                  {step.step}
-                </span>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-primary/30 bg-primary-tint">
-                  <step.icon className="h-5 w-5 text-primary-soft" aria-hidden />
+            <Reveal key={step.num} delay={i * 0.08}>
+              <div className="relative flex flex-col h-full rounded-2xl border border-border bg-surface p-7 shadow-xs">
+                <div className="flex items-center justify-between border-b border-border pb-4">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-text text-background text-xs font-bold">
+                    {step.num}
+                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-text-faint">
+                    Step {step.num}
+                  </span>
                 </div>
-                <h3 className="mt-5 text-lg font-semibold text-text">
+
+                <h3 className="mt-5 text-lg font-bold text-text">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                  {step.body}
+
+                <p className="mt-2.5 text-sm leading-relaxed text-text-secondary">
+                  {step.desc}
                 </p>
               </div>
             </Reveal>

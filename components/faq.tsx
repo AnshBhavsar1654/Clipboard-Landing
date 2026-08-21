@@ -9,28 +9,28 @@ import { SectionHeading } from "@/components/section-heading";
 
 const FAQS = [
   {
-    q: "Do I need an internet connection?",
-    a: "No. ClipBoardSync runs entirely over your local Wi-Fi and works fully offline. The bridge stays on your network — it never depends on an internet connection to sync.",
+    q: "Do I need an active internet connection to sync?",
+    a: "No! ClipBoardSync works entirely over your local home Wi-Fi network. Even if your internet goes down, as long as your phone and PC are connected to the same Wi-Fi router, copying and pasting works seamlessly.",
   },
   {
-    q: "Which phones are supported?",
-    a: "Any phone with a modern browser. You don't install anything on the phone — you scan the QR code shown in the desktop app and the dashboard opens in your camera or browser.",
+    q: "Do I have to install an app on my phone?",
+    a: "No app installation required on your phone! When you open ClipBoardSync on your PC, it shows a QR code. Scanning it with your iPhone or Android camera opens a fast mobile web dashboard right away.",
   },
   {
-    q: "Is my clipboard data stored anywhere?",
-    a: "No. Clipboard items are relayed directly between your devices over your LAN and are not uploaded to any server. History lives only in the app on your PC.",
+    q: "Which devices are supported?",
+    a: "The main desktop app runs on Windows 10 and Windows 11. The mobile client works on any modern phone or tablet with a browser — including iPhones, iPads, Android phones, and Android tablets.",
   },
   {
-    q: "Does it work on macOS or Linux?",
-    a: "The ready-to-run download is a Windows executable, because the native clipboard hooks are Win32-only. The sync server itself is platform-independent, so a macOS or Linux build is possible.",
+    q: "Is my copied data secure?",
+    a: "Yes, completely. Unlike cloud clipboard apps that store your text on external servers, ClipBoardSync transfers your clips directly between your computer and phone over your local network. No third party ever has access to your data.",
   },
   {
-    q: "Is ClipBoardSync really free?",
-    a: "Yes — free and open source. You can download the ready-made .exe, or build it yourself from source.",
+    q: "Is ClipBoardSync really 100% free?",
+    a: "Yes! ClipBoardSync is free, ad-free, and open source under the MIT License. There are no subscriptions, paywalls, or hidden fees.",
   },
   {
-    q: "My phone can't open the QR link. What should I do?",
-    a: "Confirm both devices are on the same Wi-Fi network and subnet, then allow ClipBoardSync through Windows Firewall for private networks (it listens on port 8000).",
+    q: "What should I do if my phone can't connect?",
+    a: "Make sure both your PC and phone are connected to the same Wi-Fi network. If Windows Firewall asks for permission the first time you run the app, simply click 'Allow' for Private Networks.",
   },
 ];
 
@@ -39,20 +39,20 @@ function FaqItem({
   open,
   onToggle,
 }: {
-  item: { q: string; a: string };
+  item: (typeof FAQS)[number];
   open: boolean;
   onToggle: () => void;
 }) {
   const reduced = useReducedMotion();
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-border-strong">
+    <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-xs transition-colors hover:border-border-strong">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`faq-answer-${item.q}`}
-        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer"
       >
         <span className="text-sm font-semibold text-text sm:text-base">
           {item.q}
@@ -62,7 +62,7 @@ function FaqItem({
             "h-4 w-4 shrink-0 text-text-faint transition-transform duration-200",
             open && "rotate-180 text-primary-soft",
           )}
-          aria-hidden
+          aria-hidden="true"
         />
       </button>
       <AnimatePresence initial={false}>
@@ -73,11 +73,13 @@ function FaqItem({
             initial={reduced ? undefined : { height: 0, opacity: 0 }}
             animate={reduced ? undefined : { height: "auto", opacity: 1 }}
             exit={reduced ? undefined : { height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="px-5 pb-5 text-sm leading-relaxed text-text-secondary">
-              {item.a}
-            </p>
+            <div className="border-t border-border px-5 py-4">
+              <p className="text-sm leading-relaxed text-text-secondary">
+                {item.a}
+              </p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -89,20 +91,17 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section
-      id="faq"
-      className="scroll-mt-20 border-y border-border bg-surface/40 py-24 sm:py-32"
-    >
+    <section id="faq" className="scroll-mt-20 py-20 sm:py-28 border-b border-border bg-surface-raised/20">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
           eyebrow="FAQ"
-          title="Questions, answered"
-          body="The short version: it's local, private, free, and takes about a minute to set up."
+          title="Frequently Asked Questions"
+          body="Everything you need to know about setting up and using ClipBoardSync."
         />
 
         <div className="mx-auto mt-12 max-w-3xl space-y-3">
           {FAQS.map((item, i) => (
-            <Reveal key={item.q} delay={i * 0.04}>
+            <Reveal key={item.q} delay={i * 0.03}>
               <FaqItem
                 item={item}
                 open={openIndex === i}

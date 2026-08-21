@@ -1,47 +1,42 @@
-import { CloudOff, ShieldCheck, Wifi, Zap } from "lucide-react";
 import { Reveal } from "@/components/anim";
 
-const VALUES = [
+const TRUST_POINTS = [
   {
-    icon: CloudOff,
-    title: "No cloud",
-    body: "Everything stays on your Wi-Fi router. Your clipboard never touches a third-party server.",
+    highlight: "100% Local Wi-Fi",
+    description: "Your data never leaves your home router. Zero cloud servers or third-party relays.",
   },
   {
-    icon: ShieldCheck,
-    title: "No accounts",
-    body: "No sign-up, no login, no telemetry. Just run the app and scan a QR code.",
+    highlight: "Sub-Second Sync",
+    description: "Copy on your PC and paste immediately on your phone with zero noticeable delay.",
   },
   {
-    icon: Zap,
-    title: "Real-time sync",
-    body: "Copy on one device and paste on the other in under a second — text, images, and files.",
+    highlight: "Zero Phone Setup",
+    description: "No app store downloads. Point your phone camera at the QR code and start syncing.",
   },
   {
-    icon: Wifi,
-    title: "Works offline",
-    body: "Fully functional with zero internet. A local clipboard bridge, nothing more.",
+    highlight: "Text, Images & Files",
+    description: "Move text snippets, links, camera photos, and documents in both directions seamlessly.",
   },
 ];
 
 export function ValueStrip() {
   return (
-    <section className="border-y border-border bg-surface/40">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-px px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
-        {VALUES.map((value, i) => (
-          <Reveal key={value.title} delay={i * 0.06} className="p-5">
-            <value.icon
-              className="h-5 w-5 text-primary-soft"
-              aria-hidden
-            />
-            <h3 className="mt-3 text-sm font-semibold text-text">
-              {value.title}
-            </h3>
-            <p className="mt-1.5 text-[13px] leading-relaxed text-text-secondary">
-              {value.body}
-            </p>
-          </Reveal>
-        ))}
+    <section className="border-b border-border bg-surface-raised/40">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
+          {TRUST_POINTS.map((item, i) => (
+            <Reveal key={item.highlight} delay={i * 0.04}>
+              <div className="py-7 px-6 sm:px-8">
+                <div className="text-sm font-bold tracking-tight text-text">
+                  {item.highlight}
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-text-secondary">
+                  {item.description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

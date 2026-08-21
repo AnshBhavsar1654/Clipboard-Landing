@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "ClipBoardSync — Copy once. Paste anywhere.",
   description:
-    "Real-time cross-device clipboard bridge for your PC and phone over your own Wi-Fi. Share text, images, and files — no cloud, no accounts. Free download for Windows.",
+    "Real-time cross-device clipboard sync for your PC and phone over your home Wi-Fi. Share text, images, and files — no cloud, no accounts, zero setup.",
   keywords: [
     "clipboard sync",
     "clipboard manager",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ClipBoardSync — Copy once. Paste anywhere.",
     description:
-      "Real-time clipboard sync between your PC and phone over your own Wi-Fi. No cloud, no accounts.",
+      "Real-time clipboard sync between your PC and phone over your home Wi-Fi. No cloud, no accounts.",
     type: "website",
     locale: "en_US",
   },
@@ -34,19 +35,41 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ClipBoardSync — Copy once. Paste anywhere.",
     description:
-      "Real-time clipboard sync between your PC and phone over your own Wi-Fi. No cloud, no accounts.",
+      "Real-time clipboard sync between your PC and phone over your home Wi-Fi. No cloud, no accounts.",
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased dark`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (saved === 'light' || (!saved && !prefersDark)) {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                  } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-text">
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

@@ -1,148 +1,153 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
-import { motion } from "framer-motion";
-import {
-  CloudOff,
-  Laptop,
-  Lock,
-  Phone,
-  Router,
-  ShieldCheck,
-  Wifi,
-} from "lucide-react";
+import { Laptop, Phone, ShieldCheck, Check, X, Wifi } from "lucide-react";
 import { Reveal } from "@/components/anim";
 import { SectionHeading } from "@/components/section-heading";
 
-const POINTS = [
+const COMPARISON_ROWS = [
   {
-    icon: Lock,
-    title: "Your data stays on your router",
-    body: "ClipBoardSync routes clipboard items directly between your devices over your LAN. Nothing goes through us.",
+    feature: "Where your data travels",
+    local: "Directly over your own Wi-Fi router",
+    cloud: "Uploaded to third-party cloud servers",
   },
   {
-    icon: CloudOff,
-    title: "No accounts, no telemetry",
-    body: "There's no sign-up, no cloud dashboard, and no analytics. The app is entirely self-contained.",
+    feature: "Internet required to sync?",
+    local: "No — works 100% offline on your home network",
+    cloud: "Yes — always depends on an active internet connection",
   },
   {
-    icon: Wifi,
-    title: "Works fully offline",
-    body: "No internet required, ever. It's a bridge on your network — not a service you depend on.",
+    feature: "Accounts & Sign-ups",
+    local: "None — no email, no password, no tracking",
+    cloud: "Mandatory account creation and email login",
   },
   {
-    icon: ShieldCheck,
-    title: "Private by design",
-    body: "Open source and auditable. You run the bridge yourself; there's no middleman to trust.",
+    feature: "Who can see your clipboard?",
+    local: "Only you on your connected devices",
+    cloud: "Stored on external databases and cloud servers",
+  },
+  {
+    feature: "Cost & Open Source",
+    local: "100% Free & Open Source (MIT License)",
+    cloud: "Often requires monthly subscriptions",
   },
 ];
 
-function NetworkDiagram() {
-  const reduced = useReducedMotion();
-
-  return (
-    <div className="relative overflow-hidden rounded-xl border border-border bg-surface p-6 sm:p-10">
-      <div className="bg-grid absolute inset-0 opacity-60" aria-hidden />
-
-      <div className="relative flex items-center justify-between gap-2 sm:gap-6">
-        <NodeCard
-          icon={<Laptop className="h-5 w-5 text-text-secondary" />}
-          label="Windows PC"
-          sub="ClipBoardSync.exe"
-        />
-
-        <div className="flex min-w-0 flex-1 flex-col items-center px-1">
-          <div className="flex w-full items-center" aria-hidden>
-            <span className="h-px flex-1 border-t border-dashed border-border-strong" />
-            <span className="h-2 w-2 rounded-full bg-primary" />
-            <span className="h-px flex-1 border-t border-dashed border-border-strong" />
-          </div>
-          <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary-tint px-3 py-1 text-[11px] font-medium text-primary-soft">
-            <Lock className="h-3 w-3" aria-hidden />
-            Stays on your network
-          </span>
-        </div>
-
-        <NodeCard
-          icon={<Phone className="h-5 w-5 text-text-secondary" />}
-          label="Your phone"
-          sub="Any mobile browser"
-        />
-      </div>
-
-      <div className="relative mt-8 flex items-center justify-center">
-        <motion.div
-          animate={reduced ? undefined : { scale: [1, 1.08, 1] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="flex items-center gap-2.5 rounded-lg border border-border bg-surface-raised px-4 py-2.5"
-        >
-          <Router className="h-4 w-4 text-primary-soft" aria-hidden />
-          <span className="text-sm font-medium text-text">Your Wi-Fi router</span>
-          <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-        </motion.div>
-      </div>
-
-      <p className="relative mt-6 text-center text-xs text-text-faint">
-        0 requests to the internet · 100% local transfer
-      </p>
-    </div>
-  );
-}
-
-function NodeCard({
-  icon,
-  label,
-  sub,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  sub: string;
-}) {
-  return (
-    <div className="flex w-28 shrink-0 flex-col items-center gap-2 rounded-lg border border-border bg-surface-raised px-2 py-3 text-center sm:w-36">
-      <span className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface">
-        {icon}
-      </span>
-      <span className="text-xs font-semibold text-text">{label}</span>
-      <span className="text-[10px] text-text-faint">{sub}</span>
-    </div>
-  );
-}
-
 export function Privacy() {
   return (
-    <section id="privacy" className="scroll-mt-20 py-24 sm:py-32">
+    <section id="privacy" className="scroll-mt-20 py-20 sm:py-28 border-b border-border">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal>
-            <NetworkDiagram />
-          </Reveal>
+        <SectionHeading
+          eyebrow="Privacy & Security"
+          title="Your clipboard never leaves your home Wi-Fi"
+          body="Most clipboard tools upload your passwords, private links, and sensitive notes to company servers. ClipBoardSync keeps everything strictly between your PC and phone."
+        />
 
-          <div>
-            <SectionHeading
-              eyebrow="Private by design"
-              title="Your clipboard never leaves your network"
-              body="ClipBoardSync is a local bridge, not a cloud service. There's no server to hack, no account to lose, and nothing to sync except what you actually copy."
-              align="left"
-            />
+        <div className="mt-14 grid gap-8 lg:grid-cols-12 items-start">
+          {/* Simple Visual Diagram */}
+          <div className="lg:col-span-5 rounded-xl border border-border bg-surface p-6 shadow-xs">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <span className="text-xs font-semibold text-text uppercase tracking-wider">
+                Direct Home Network Sync
+              </span>
+              <span className="flex items-center gap-1.5 text-xs text-success font-medium">
+                <span className="h-2 w-2 rounded-full bg-success" />
+                Safe &amp; Private
+              </span>
+            </div>
 
-            <div className="mt-8 space-y-5">
-              {POINTS.map((point, i) => (
-                <Reveal key={point.title} delay={i * 0.06}>
-                  <div className="flex gap-4">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/30 bg-primary-tint">
-                      <point.icon className="h-4 w-4 text-primary-soft" aria-hidden />
-                    </span>
-                    <div>
-                      <h3 className="text-sm font-semibold text-text">
-                        {point.title}
-                      </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-text-secondary">
-                        {point.body}
-                      </p>
+            <div className="my-6 space-y-4">
+              {/* PC Node */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-surface-raised p-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface text-text-secondary">
+                    <Laptop className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <div className="text-xs font-semibold text-text">Your Windows PC</div>
+                    <div className="text-[11px] text-text-faint">ClipBoardSync App</div>
+                  </div>
+                </div>
+                <span className="rounded-full bg-surface-overlay border border-border px-2.5 py-0.5 text-[10px] font-medium text-text-faint">
+                  PC
+                </span>
+              </div>
+
+              {/* Direct Wi-Fi Bridge Indicator */}
+              <div className="flex items-center justify-center py-1">
+                <div className="flex flex-col items-center">
+                  <div className="h-3 w-px border-l border-dashed border-border-strong" />
+                  <div className="flex items-center gap-2 rounded-full border border-border bg-surface-raised px-3.5 py-1 text-xs font-medium text-text-secondary shadow-xs">
+                    <Wifi className="h-3.5 w-3.5 text-primary-soft" />
+                    <span>Your Local Wi-Fi (No cloud)</span>
+                  </div>
+                  <div className="h-3 w-px border-l border-dashed border-border-strong" />
+                </div>
+              </div>
+
+              {/* Phone Node */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-surface-raised p-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface text-text-secondary">
+                    <Phone className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <div className="text-xs font-semibold text-text">Your Phone</div>
+                    <div className="text-[11px] text-text-faint">Mobile Browser (iOS / Android)</div>
+                  </div>
+                </div>
+                <span className="rounded-full bg-surface-overlay border border-border px-2.5 py-0.5 text-[10px] font-medium text-text-faint">
+                  Phone
+                </span>
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-border bg-surface-raised p-3.5 text-xs text-text-secondary">
+              <div className="flex items-center gap-2 font-semibold text-text">
+                <ShieldCheck className="h-4 w-4 text-success" />
+                <span>Zero Data Collection</span>
+              </div>
+              <p className="mt-1 text-[11px] leading-relaxed text-text-faint">
+                ClipBoardSync contains no tracking scripts, ads, or analytics. Your copied text stays strictly in your hands.
+              </p>
+            </div>
+          </div>
+
+          {/* Clean Comparison Matrix */}
+          <div className="lg:col-span-7 rounded-xl border border-border bg-surface shadow-xs overflow-hidden">
+            <div className="border-b border-border bg-surface-raised px-5 py-3.5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-text">
+                ClipBoardSync vs Cloud Clipboard Apps
+              </span>
+            </div>
+
+            <div className="divide-y divide-border">
+              {COMPARISON_ROWS.map((row) => (
+                <div key={row.feature} className="p-4 sm:p-5">
+                  <div className="text-xs font-semibold text-text mb-2.5">
+                    {row.feature}
+                  </div>
+                  <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 text-xs">
+                    <div className="flex items-start gap-2 rounded-lg bg-success-tint border border-success/20 p-2.5 text-text">
+                      <Check className="h-4 w-4 text-success shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-success block text-[11px]">
+                          ClipBoardSync
+                        </span>
+                        <span className="text-xs text-text-secondary">{row.local}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2 rounded-lg bg-surface-raised border border-border p-2.5 text-text-faint">
+                      <X className="h-4 w-4 text-text-faint shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-text-faint block text-[11px]">
+                          Other Cloud Apps
+                        </span>
+                        <span className="text-xs text-text-faint">{row.cloud}</span>
+                      </div>
                     </div>
                   </div>
-                </Reveal>
+                </div>
               ))}
             </div>
           </div>
