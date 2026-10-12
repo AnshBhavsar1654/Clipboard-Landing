@@ -1,84 +1,71 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Download } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { Download, ShieldCheck } from "lucide-react";
 import { DevicesMockup } from "@/components/devices-mockup";
 
 export function Hero({ downloadUrl }: { downloadUrl: string | null }) {
   const reduced = useReducedMotion();
-
-  const fade = {
-    initial: reduced ? undefined : { opacity: 0, y: 12 },
+  const fade = (delay: number) => ({
+    initial: reduced ? undefined : { opacity: 0, y: 14 },
     animate: reduced ? undefined : { opacity: 1, y: 0 },
-  };
+    transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] as const },
+  });
 
   return (
-    <section className="relative overflow-hidden border-b border-border bg-bg">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 lg:gap-8 items-center border-x border-border min-h-[calc(100vh-4rem)] lg:min-h-0 pt-16 pb-16 lg:pt-32 lg:pb-32">
-
-          <motion.div
-            {...fade}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="px-6 lg:px-12 flex flex-col justify-center"
+    <section className="relative overflow-x-clip">
+      <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-20 pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-28 lg:pt-20">
+        <div className="min-w-0">
+          <motion.p
+            {...fade(0)}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-text-secondary"
           >
-            {/* Technical readout instead of pill badge */}
-            <div className="font-mono text-xs font-bold uppercase tracking-widest text-primary mb-6 flex items-center gap-4">
-              <span>STATUS: ONLINE</span>
-              <span className="text-border-strong">/</span>
-              <span>LOCAL_NETWORK_ONLY</span>
-            </div>
+            <ShieldCheck className="h-3.5 w-3.5 text-success" aria-hidden="true" />
+            Stays on your Wi-Fi. No cloud, no account.
+          </motion.p>
 
-            {/* Sharp, tight typography */}
-            <h1 className="text-balance text-5xl font-black tracking-tighter text-text sm:text-7xl leading-[1.1]">
-              Copy on one device.<br />
-              Paste on the other.
-            </h1>
+          <motion.h1
+            {...fade(0.05)}
+            className="mt-6 text-balance text-4xl font-bold tracking-tight text-text sm:text-6xl sm:leading-[1.05]"
+          >
+            Copy on your PC.
+            <br />
+            Paste on your phone.
+          </motion.h1>
 
-            <p className="mt-6 max-w-xl text-pretty font-mono text-sm leading-relaxed text-text-secondary sm:text-base">
-              {">"} ClipBoardSync establishes a direct TCP connection over your local Wi-Fi.
-              Text, links, and files sync bi-directionally with zero cloud mediation.
-            </p>
+          <motion.p
+            {...fade(0.1)}
+            className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-text-secondary"
+          >
+            Send text, links, photos and files between your Windows computer and
+            any phone. Scan one QR code and you are connected. Nothing to
+            install on the phone, and nothing leaves your network.
+          </motion.p>
 
-            {/* Primary Action CTAs - sharp edges */}
-            <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <a
-                href={downloadUrl ?? "#download"}
-                className="inline-flex h-12 items-center justify-center gap-2 border-2 border-primary bg-primary px-8 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-primary cursor-pointer uppercase tracking-wider"
-              >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                GET_WINDOWS_CLIENT
-              </a>
-              <a
-                href="#how-it-works"
-                className="inline-flex h-12 items-center justify-center gap-2 border-2 border-border bg-transparent px-8 text-sm font-bold text-text transition-colors hover:border-border-strong cursor-pointer uppercase tracking-wider"
-              >
-                VIEW_DOCS
-              </a>
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase text-text-faint">
-              <span>OS: WIN_10+</span>
-              <span className="h-1 w-1 bg-border-strong rounded-none" aria-hidden="true" />
-              <span>MOBILE: WEB_ONLY</span>
-              <span className="h-1 w-1 bg-border-strong rounded-none" aria-hidden="true" />
-              <span>LICENSE: MIT</span>
-            </div>
+          <motion.div {...fade(0.15)} className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={downloadUrl ?? "#download"}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-primary-ink shadow-card transition-[filter] hover:brightness-110"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              Download for Windows
+            </a>
+            <a
+              href="#how-it-works"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-border bg-surface px-6 text-[15px] font-semibold text-text transition-colors hover:bg-surface-raised"
+            >
+              See how it works
+            </a>
           </motion.div>
 
-          {/* Product UI Mockup */}
-          <motion.div
-            {...fade}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-16 lg:mt-0 px-6 lg:px-12 flex justify-center lg:justify-end"
-          >
-            <div className="w-full max-w-[500px] border border-border bg-surface p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
-              <DevicesMockup />
-            </div>
-          </motion.div>
-
+          <motion.p {...fade(0.2)} className="mt-5 text-sm text-text-faint">
+            Free · Windows 10 and 11 · Works with iPhone, Android and any browser
+          </motion.p>
         </div>
+
+        <motion.div {...fade(0.12)} className="min-w-0">
+          <DevicesMockup />
+        </motion.div>
       </div>
     </section>
   );

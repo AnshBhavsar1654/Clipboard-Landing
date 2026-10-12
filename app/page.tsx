@@ -3,6 +3,8 @@ import { Hero } from "@/components/hero";
 import { ValueStrip } from "@/components/value-strip";
 import { HowItWorks } from "@/components/how-it-works";
 import { Features } from "@/components/features";
+import { TwoComputers } from "@/components/two-computers";
+import { Privacy } from "@/components/privacy";
 import { Faq } from "@/components/faq";
 import { DownloadCta } from "@/components/download-cta";
 import { Footer } from "@/components/footer";
@@ -21,6 +23,8 @@ export default async function Home() {
         <ValueStrip />
         <HowItWorks />
         <Features />
+        <TwoComputers />
+        <Privacy />
         <Faq />
         <DownloadCta release={release} githubRepo={githubRepo} />
       </main>

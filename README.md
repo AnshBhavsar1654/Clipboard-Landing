@@ -33,7 +33,7 @@ and never breaks the build.
 ## Download integration
 
 `lib/release.ts` fetches the latest release from the GitHub API
-(`/repos/{owner}/{repo}/releases/latest`), picks the `ClipBoardSync.exe`
+(`/repos/{owner}/{repo}/releases/latest`), picks the `ClipBoardSync` installer (`.exe`)
 asset, and exposes version / size / download URL / release date. The fetch is
 cached for 1 hour (ISR). See [`DESIGN.md`](./DESIGN.md#download-integration).
 

@@ -13,9 +13,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "ClipBoardSync - Copy once. Paste anywhere.",
+  title: "ClipBoardSync - Copy on your PC. Paste on your phone.",
   description:
-    "Real-time cross-device clipboard sync for your PC and phone over your home Wi-Fi. Share text, images, and files — no cloud, no accounts, zero setup.",
+    "Share text, links, photos and files between your Windows PC, your phone and other computers over your own Wi-Fi. No cloud, no account, nothing to install on the phone.",
   keywords: [
     "clipboard sync",
     "clipboard manager",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "clipboardsync",
   ],
   openGraph: {
-    title: "ClipBoardSync — Copy once. Paste anywhere.",
+    title: "ClipBoardSync — Copy on your PC. Paste on your phone.",
     description:
       "Real-time clipboard sync between your PC and phone over your home Wi-Fi. No cloud, no accounts.",
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClipBoardSync — Copy once. Paste anywhere.",
+    title: "ClipBoardSync — Copy on your PC. Paste on your phone.",
     description:
       "Real-time clipboard sync between your PC and phone over your home Wi-Fi. No cloud, no accounts.",
   },

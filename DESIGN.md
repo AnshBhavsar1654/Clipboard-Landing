@@ -12,38 +12,34 @@ The page is a **single scrollable landing page** whose core purposes are:
 
 ---
 
-## Design Principles: Avoiding "Vibe-Coded" Traps
+## Design principles
 
-The landing page follows strict, modern design standards designed to avoid generic AI-generated templates:
-
-* **No harsh rainbow / multi-color gradients** — crisp, high-contrast, perfectly kerned typography instead of cliché gradient text.
-* **No floating glowing orbs or ambient blurred blobs** — grounded, deliberate canvas tones with clear structure.
-* **No generic dot-grid backgrounds** — clean surfaces with hairline borders (`1px`).
-* **Authentic Windows Desktop UI** — Windows 11 window controls (minimize, maximize, close) rather than generic macOS traffic lights.
-* **Light & Dark Mode Support** — balanced light mode (clean off-white `#f8fafc` canvas, never blinding flat white) and deep dark mode (`#0b0f17`).
-* **No Repetitive Cookie-Cutter Cards** — bespoke asymmetric product feature showcases instead of rows of identical icon boxes.
-* **Essential Legal Compliance** — includes working, dedicated Privacy Policy and Terms of Service modal dialogs for local LAN utility software.
-* **Clear, User-Centric Copy** — focus on outcomes ("Copy on your PC, paste on your phone") rather than internal socket protocols.
+* **Match the app.** Colors, radii and tone come from the ClipBoardSync desktop window: soft canvas, white cards, one indigo accent, sentence case everywhere.
+* **Plain language.** Copy says what happens for the user ("Copy on your PC, paste on your phone"), never protocol jargon or terminal-style labels.
+* **Only true claims.** Every number and promise must match the app: 2 GB per file, 1 GB per folder, Windows 10/11, plain HTTP on the LAN (say so), password-manager clips skipped by default. No invented latency or "no limits" claims, and no license claim until the app repo has a LICENSE file.
+* **Real product UI.** The hero mockup mirrors the desktop window (sidebar, status card, clip cards) and the two-computers section mirrors the Connect dialog.
+* **Calm motion.** Reveal-on-scroll and one looping sync animation; all of it respects `prefers-reduced-motion`.
+* **Light and dark.** Both themes use the tokens below; avoid hard-coded colors.
 
 ---
 
 ## Visual Design Tokens
 
-### Color Palette
+### Color palette
 
-| Token | Light Theme | Dark Theme | Usage |
-|-------|-------------|------------|-------|
-| `--bg` | `#f8fafc` | `#0b0f17` | Page background |
-| `--surface` | `#ffffff` | `#131b2e` | Cards, panels, mockups |
-| `--surface-raised` | `#f8fafc` | `#1a243b` | Nested panels, hover states |
-| `--border` | `#e2e8f0` | `#23304b` | Hairline borders (1px) |
-| `--border-strong` | `#cbd5e1` | `#334466` | Border on hover / emphasis |
-| `--text` | `#0f172a` | `#f1f5f9` | Primary headings & text |
-| `--text-secondary` | `#475569` | `#94a3b8` | Body text & descriptions |
-| `--text-faint` | `#94a3b8` | `#64748b` | Captions, metadata, icons |
-| `--primary` | `#4338ca` | `#6366f1` | Primary buttons, accent |
-| `--primary-soft` | `#4f46e5` | `#818cf8` | Highlight text, hover states |
-| `--success` | `#16a34a` | `#22c55e` | Connected / online status |
+| Token | Light | Dark | Usage |
+|-------|-------|------|-------|
+| `--bg` | `#f5f6fa` | `#0f1116` | Page background |
+| `--bg-subtle` | `#eceef4` | `#13151c` | Alternate sections, footer |
+| `--surface` | `#ffffff` | `#181b23` | Cards, panels, mockups |
+| `--surface-raised` | `#f1f3f8` | `#20242e` | Nested panels, hover |
+| `--border` | `#e1e4ec` | `#272c38` | Hairlines |
+| `--text` | `#151826` | `#eef0f6` | Headings, primary text |
+| `--text-secondary` | `#5d6579` | `#a2a9bb` | Body copy |
+| `--text-faint` | `#8a91a3` | `#727a8e` | Captions |
+| `--primary` | `#4a63e7` | `#7d92ff` | Buttons, accents (`--primary-ink` for text on it) |
+| `--success` | `#138a5b` | `#4cd698` | Connected / safe |
+| `--warn` | `#a15c07` | `#f0b24a` | File tiles |
 
 ---
 
@@ -51,11 +47,13 @@ The landing page follows strict, modern design standards designed to avoid gener
 
 Single route `/`:
 
-1. **Header / Nav** (`components/nav.tsx`): Logo, navigation links, Theme Toggle (Light/Dark), Download button.
-2. **Hero** (`components/hero.tsx` + `components/devices-mockup.tsx`): Headline, subheadline, CTAs, interactive Windows & Phone mockup.
-3. **Value Strip** (`components/value-strip.tsx`): Integrated hairline trust strip (100% Local Wi-Fi, Sub-Second Sync, Zero Phone Setup, Text & Files).
-4. **How It Works** (`components/how-it-works.tsx`): 3 simple steps (Open on PC → Scan QR → Copy & Paste).
-5. **Features** (`components/features.tsx`): Asymmetric capability showcase with real UI previews.
-6. **FAQ** (`components/faq.tsx`): Accessible accordion addressing common questions.
-7. **Download CTA** (`components/download-cta.tsx`): Clean download card with version metadata.
-8. **Footer** (`components/footer.tsx`): Navigation, GitHub link, and Privacy Policy / Terms of Service modal triggers.
+1. **Nav** (`nav.tsx`): logo, section links, theme toggle, Download.
+2. **Hero** (`hero.tsx`, `devices-mockup.tsx`): headline, subhead, CTAs, animated desktop-window + phone mockup.
+3. **Value strip** (`value-strip.tsx`): four short facts.
+4. **How it works** (`how-it-works.tsx`): install, scan once, copy and paste.
+5. **Features** (`features.tsx`): bento grid (two-way sync, no phone app, searchable history, quick paste, light/dark, files and folders).
+6. **Two computers** (`two-computers.tsx`): PC-to-PC linking with the Connect dialog preview.
+7. **Privacy** (`privacy.tsx`): pairing, no cloud, private clips skipped, local history, plus the honest "LAN traffic is not encrypted" note.
+8. **FAQ** (`faq.tsx`): accordion.
+9. **Download** (`download-cta.tsx`): version, size and date from the latest GitHub release.
+10. **Footer** (`footer.tsx`): links and Privacy / Terms modals (`legal-modal.tsx`).

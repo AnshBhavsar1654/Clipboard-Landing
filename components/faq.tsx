@@ -1,35 +1,48 @@
 "use client";
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/anim";
+import { SectionHeading } from "@/components/section-heading";
 
 const FAQS = [
   {
-    q: "DO I NEED AN ACTIVE INTERNET CONNECTION TO SYNC?",
-    a: "Negative. ClipBoardSync operates entirely over your local Wi-Fi subnet. External internet connectivity is not required for the TCP handshake or data transfer.",
+    q: "Do I need internet to use it?",
+    a: "No. Your devices only need to be on the same Wi-Fi or network. Sharing keeps working even if the internet is down.",
   },
   {
-    q: "IS A MOBILE APP INSTALLATION REQUIRED?",
-    a: "No. The desktop host serves a lightweight PWA. Scanning the generated QR code opens the interface directly in your mobile browser without app store dependencies.",
+    q: "Do I have to install an app on my phone?",
+    a: "No. Scan the QR code and ClipBoardSync opens in your phone's browser. It works on iPhone and Android, and you can reopen it any time from the same address.",
   },
   {
-    q: "WHAT OPERATING SYSTEMS ARE SUPPORTED?",
-    a: "Host application: Windows 10/11. Client interface: Any device with a modern web browser (iOS, Android, Linux, macOS).",
+    q: "Can I connect two computers?",
+    a: "Yes. Open Connect device, choose Another computer, pick the other PC (or type its address) and enter the pairing code it shows. After that the two PCs share clips and files both ways.",
   },
   {
-    q: "IS MY CLIPBOARD DATA TRANSMITTED SECURELY?",
-    a: "Data never leaves your local network. It is routed peer-to-peer over your router's LAN. There are no intermediary cloud servers or third-party databases involved.",
+    q: "Which Windows versions are supported?",
+    a: "Windows 10 and 11. The window uses Microsoft Edge WebView2, which is already included with Windows 11 and most up-to-date Windows 10 PCs.",
   },
   {
-    q: "IS CLIPBOARDSYNC COMPLETELY FREE?",
-    a: "Yes. The software is distributed under the MIT License. No telemetry, no ads, no subscriptions.",
+    q: "Is it safe? Who can see my clips?",
+    a: "Clips never go to a cloud server. Only devices you have paired can connect, and a new device needs your QR code or pairing code. Because traffic on a local network is not encrypted, use it on Wi-Fi you trust.",
   },
   {
-    q: "HOW DO I TROUBLESHOOT CONNECTION FAILURES?",
-    a: "Ensure both devices reside on the same IP subnet. Verify that Windows Defender Firewall allows private network traffic for ClipBoardSync.exe.",
+    q: "Will it copy my passwords?",
+    a: "Not by default. Clips that password managers mark as private are skipped. You can change this in Settings under Privacy.",
+  },
+  {
+    q: "Is there a size limit for files?",
+    a: "Single files can be up to 2 GB. Folders are sent as a zip of up to 1 GB. Larger transfers are skipped with a clear message instead of failing silently.",
+  },
+  {
+    q: "My phone can't connect. What should I check?",
+    a: "Make sure both are on the same Wi-Fi, then allow ClipBoardSync through Windows Firewall for private networks. In Settings, Check connection shows the address your phone should open.",
+  },
+  {
+    q: "Is it free?",
+    a: "Yes. There is no account, no subscription and no ads.",
   },
 ];
 
@@ -47,25 +60,18 @@ function FaqItem({
   const reduced = useReducedMotion();
 
   return (
-    <div className="border-b border-border bg-surface transition-colors hover:bg-surface-raised">
+    <div className="border-b border-border last:border-b-0">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`faq-answer-${index}`}
-        className="flex w-full items-center justify-between gap-4 py-6 text-left cursor-pointer group"
+        className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
       >
-        <div className="flex items-center gap-6">
-          <span className="font-mono text-xs font-bold text-primary">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="font-mono text-sm sm:text-base font-bold text-text tracking-tight">
-            {item.q}
-          </span>
-        </div>
+        <span className="text-base font-semibold text-text">{item.q}</span>
         <Plus
           className={cn(
-            "h-5 w-5 shrink-0 text-text transition-transform duration-300",
+            "h-5 w-5 shrink-0 text-text-faint transition-transform duration-300",
             open && "rotate-45 text-primary",
           )}
           aria-hidden="true"
@@ -79,13 +85,10 @@ function FaqItem({
             initial={reduced ? undefined : { height: 0, opacity: 0 }}
             animate={reduced ? undefined : { height: "auto", opacity: 1 }}
             exit={reduced ? undefined : { height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
           >
-            <div className="pb-6 pl-10 pr-4">
-              <p className="font-mono text-sm leading-relaxed text-text-secondary border-l-2 border-border pl-4">
-                {">"} {item.a}
-              </p>
-            </div>
+            <p className="pb-5 pr-8 text-[15px] leading-relaxed text-text-secondary">{item.a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -97,31 +100,22 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="scroll-mt-20 border-b border-border bg-surface">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
-        <Reveal className="max-w-3xl mb-12">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-primary">
-            // DOCUMENTATION
-          </span>
-          <h2 className="mt-4 text-balance text-4xl font-black tracking-tighter text-text sm:text-5xl uppercase">
-            Frequently Asked Questions
-          </h2>
-        </Reveal>
-
-        <div className="mx-auto mt-12 border-t border-border">
-          {FAQS.map((item, i) => (
-            <Reveal key={item.q} delay={i * 0.03}>
+    <section id="faq" className="scroll-mt-20 py-20 sm:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <SectionHeading eyebrow="FAQ" title="Questions people ask" />
+        <Reveal delay={0.05}>
+          <div className="mt-12 rounded-2xl border border-border bg-surface px-6">
+            {FAQS.map((item, i) => (
               <FaqItem
+                key={item.q}
                 item={item}
                 index={i}
                 open={openIndex === i}
-                onToggle={() =>
-                  setOpenIndex((current) => (current === i ? null : i))
-                }
+                onToggle={() => setOpenIndex((c) => (c === i ? null : i))}
               />
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

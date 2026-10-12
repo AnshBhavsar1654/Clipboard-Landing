@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { X, ShieldCheck, FileText } from "lucide-react";
 
 export type LegalModalType = "privacy" | "terms" | null;
@@ -10,18 +10,20 @@ interface LegalModalProps {
   onClose: () => void;
 }
 
+const H = "text-base font-semibold text-text";
+
 export function LegalModal({ type, onClose }: LegalModalProps) {
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     if (type) {
       document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keydown", onKey);
     }
     return () => {
       document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", onKey);
     };
   }, [type, onClose]);
 
@@ -29,105 +31,89 @@ export function LegalModal({ type, onClose }: LegalModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-xs" onClick={onClose} aria-hidden="true" />
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div className="relative z-10 max-h-[85vh] w-full max-w-2xl overflow-hidden rounded-xl border border-border bg-surface-raised shadow-2xl flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-border px-6 py-4 bg-surface">
+        role="dialog"
+        aria-modal="true"
+        aria-label={type === "privacy" ? "Privacy" : "Terms"}
+        className="shadow-card relative z-10 flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-surface"
+      >
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <div className="flex items-center gap-2.5">
             {type === "privacy" ? (
-              <ShieldCheck className="h-5 w-5 text-primary-soft" />
+              <ShieldCheck className="h-5 w-5 text-primary" aria-hidden="true" />
             ) : (
-              <FileText className="h-5 w-5 text-primary-soft" />
+              <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
             )}
             <h2 className="text-base font-semibold text-text">
-              {type === "privacy" ? "Privacy Policy" : "Terms of Service"}
+              {type === "privacy" ? "Privacy" : "Terms of use"}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1.5 text-text-faint hover:bg-surface-overlay hover:text-text transition-colors"
-            aria-label="Close modal"
+            className="cursor-pointer rounded-lg p-1.5 text-text-faint transition-colors hover:bg-surface-raised hover:text-text"
+            aria-label="Close"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="overflow-y-auto px-6 py-6 text-sm leading-relaxed text-text-secondary space-y-4">
+        <div className="space-y-4 overflow-y-auto px-6 py-6 text-sm leading-relaxed text-text-secondary">
           {type === "privacy" ? (
             <>
-              <p className="text-xs font-mono uppercase tracking-wider text-text-faint">
-                Effective: January 2026 · Local Software Architecture
-              </p>
-              <h3 className="font-semibold text-text text-base">
-                1. Zero Data Collection Architecture
-              </h3>
+              <h3 className={H}>We collect nothing</h3>
               <p>
-                ClipBoardSync is engineered as a strictly local utility. The software operates entirely on your local area network (LAN). No clipboard contents, device identifiers, hostnames, keystrokes, IP addresses, or telemetry data are collected, transmitted, stored, or processed by any external server or third party.
+                ClipBoardSync runs on your own devices. There is no ClipBoardSync server, no account, no
+                analytics and no tracking. Your clips, file names and device names are never sent to us or to
+                anyone else.
               </p>
-              <h3 className="font-semibold text-text text-base">
-                2. Local Network Communication
-              </h3>
+              <h3 className={H}>How your devices talk</h3>
               <p>
-                All synchronization between your Windows PC and mobile devices occurs directly via peer-to-peer HTTP and WebSocket connections on your local Wi-Fi router (default port: 8000). Traffic does not route through intermediate relays or external servers.
+                Your PC and your phones (or a second PC) connect directly over your local network, by default
+                on port 8000. Traffic on a local network is not encrypted, so please use ClipBoardSync only on
+                networks you trust.
               </p>
-              <h3 className="font-semibold text-text text-base">
-                3. Ephemeral Memory and Local Persistence
-              </h3>
+              <h3 className={H}>What is stored, and where</h3>
               <p>
-                Clipboard history is retained exclusively in volatile memory and local storage on your host Windows PC. No cloud synchronization accounts or remote backups exist. You can clear clipboard history at any time from within the application.
+                Recent clips, pinned items, shared files and your paired devices are stored on your Windows PC
+                only. You can delete a clip, remove a paired device, or clear all history from the app at any
+                time. Clips that password managers mark as private are skipped by default.
               </p>
-              <h3 className="font-semibold text-text text-base">
-                4. Third-Party Requests
-              </h3>
+              <h3 className={H}>No outside requests</h3>
               <p>
-                The standalone executable makes zero outbound network requests to external domains. Updates must be downloaded manually from the official GitHub repository releases.
+                The app does not contact outside servers. To update, download the new version from the
+                releases page yourself.
               </p>
             </>
           ) : (
             <>
-              <p className="text-xs font-mono uppercase tracking-wider text-text-faint">
-                Effective: January 2026 · Open Source License
-              </p>
-              <h3 className="font-semibold text-text text-base">
-                1. Acceptance of Terms
-              </h3>
+              <h3 className={H}>Using ClipBoardSync</h3>
               <p>
-                By downloading, compiling, or running ClipBoardSync, you agree to these Terms. ClipBoardSync is distributed as free and open-source software under the MIT License.
+                ClipBoardSync is free to use. By downloading or running it you agree to these terms. Use it on
+                devices and networks you own or are allowed to use.
               </p>
-              <h3 className="font-semibold text-text text-base">
-                2. Intended Use and Local Network Security
-              </h3>
+              <h3 className={H}>Keep your network safe</h3>
               <p>
-                ClipBoardSync is designed for use on secure, trusted private local networks (such as home or private office Wi-Fi). Because transmission is local to your subnet, you are responsible for maintaining the physical and wireless security of your local network environment.
+                Sharing happens over your local network. You are responsible for who can join that network and
+                for keeping your pairing code private. Remove any device you no longer trust from Settings.
               </p>
-              <h3 className="font-semibold text-text text-base">
-                3. Disclaimer of Warranty
-              </h3>
-              <p className="font-mono text-xs text-text-faint bg-surface p-3 rounded-lg border border-border">
-                THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-              </p>
-              <h3 className="font-semibold text-text text-base">
-                4. Source Code and Contribution
-              </h3>
-              <p>
-                The complete source code is available on GitHub. You are free to inspect, modify, fork, and distribute the software in compliance with the MIT License terms.
+              <h3 className={H}>No warranty</h3>
+              <p className="rounded-xl border border-border bg-surface-raised p-3 text-xs">
+                THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+                INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+                NONINFRINGEMENT. THE AUTHORS ARE NOT LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING
+                FROM THE USE OF THE SOFTWARE.
               </p>
             </>
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex justify-end border-t border-border bg-surface px-6 py-3">
+        <div className="flex justify-end border-t border-border px-6 py-3">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-surface-overlay px-4 py-2 text-xs font-semibold text-text hover:bg-border-strong transition-colors"
+            className="h-9 cursor-pointer rounded-lg bg-primary px-4 text-sm font-semibold text-primary-ink transition-[filter] hover:brightness-110"
           >
             Close
           </button>

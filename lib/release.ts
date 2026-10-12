@@ -9,8 +9,8 @@ export interface ReleaseInfo {
 }
 
 const FALLBACK_RELEASE: ReleaseInfo = {
-  tag: "v0.1.0",
-  version: "0.1.0",
+  tag: "v0.2.0",
+  version: "0.2.0",
   size: null,
   url: null,
   publishedAt: null,

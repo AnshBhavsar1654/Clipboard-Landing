@@ -1,56 +1,53 @@
+import { Download, QrCode, ClipboardPaste } from "lucide-react";
 import { Reveal } from "@/components/anim";
+import { SectionHeading } from "@/components/section-heading";
+import { QrMark } from "@/components/qr-mark";
 
 const STEPS = [
   {
-    num: "01",
-    title: "INIT_WINDOWS_CLIENT",
-    desc: "Download ClipBoardSync for Windows. Execute the binary. No installation, no background telemetry, no account creation.",
+    icon: Download,
+    title: "Install and open it",
+    text: "Run the installer, or the portable version if you prefer. The app opens with a status card that says it is ready.",
   },
   {
-    num: "02",
-    title: "ESTABLISH_HANDSHAKE",
-    desc: "Point your mobile device camera at the generated QR code. The mobile client loads instantly via local network IP.",
+    icon: QrCode,
+    title: "Scan the code once",
+    text: "Click Connect device and point your phone's camera at the QR code. Your phone opens ClipBoardSync in its browser and pairs on its own.",
   },
   {
-    num: "03",
-    title: "BI_DIRECTIONAL_SYNC",
-    desc: "System clipboards are now linked via local TCP socket. Standard OS copy/paste commands instantly mirror across devices.",
+    icon: ClipboardPaste,
+    title: "Copy and paste",
+    text: "Copy something on your PC and it shows up on your phone. Share from your phone and it lands on your PC, ready for Ctrl+V.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="scroll-mt-20 py-20 sm:py-32 border-b border-border bg-bg">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <Reveal className="max-w-3xl mb-12">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-primary">
-            // PROTOCOL_FLOW
-          </span>
-          <h2 className="mt-4 text-balance text-4xl font-black tracking-tighter text-text sm:text-5xl uppercase">
-            Execution in under a minute
-          </h2>
-          <p className="mt-4 font-mono text-sm leading-relaxed text-text-secondary">
-            {">"} Zero dependency installation. Zero cloud routing.
-          </p>
-        </Reveal>
+    <section id="how-it-works" className="scroll-mt-20 py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading
+          eyebrow="How it works"
+          title="Connected in under a minute"
+          body="Set it up once. After that your phone reconnects by itself whenever you are on the same Wi-Fi."
+        />
 
-        <div className="border-t border-border">
+        <div className="mt-14 grid gap-5 lg:grid-cols-3">
           {STEPS.map((step, i) => (
-            <Reveal key={step.num} delay={i * 0.08}>
-              <div className="group flex flex-col md:flex-row md:items-center justify-between border-b border-border py-8 md:py-12 hover:bg-surface-raised transition-colors px-4 md:px-8 -mx-4 md:mx-0">
-                <div className="flex items-center gap-6 md:gap-12 w-full md:w-1/2">
-                  <span className="font-mono text-3xl md:text-5xl font-black text-border-strong group-hover:text-primary transition-colors">
-                    {step.num}
+            <Reveal key={step.title} delay={i * 0.07}>
+              <div className="h-full rounded-2xl border border-border bg-surface p-7">
+                <div className="flex items-center justify-between">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-primary-tint text-primary">
+                    <step.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <h3 className="font-mono text-lg md:text-xl font-bold text-text uppercase tracking-tight">
-                    {step.title}
-                  </h3>
+                  <span className="text-sm font-semibold text-text-faint">Step {i + 1}</span>
                 </div>
-                <div className="mt-4 md:mt-0 w-full md:w-1/2 md:pl-12">
-                  <p className="font-mono text-sm leading-relaxed text-text-secondary">
-                    {step.desc}
-                  </p>
-                </div>
+                <h3 className="mt-6 text-lg font-semibold text-text">{step.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-text-secondary">{step.text}</p>
+                {i === 1 && (
+                  <div className="mt-5 inline-block rounded-xl border border-border bg-white p-2">
+                    <QrMark className="h-20 w-20" />
+                  </div>
+                )}
               </div>
             </Reveal>
           ))}
